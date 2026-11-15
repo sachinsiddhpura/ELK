@@ -37,12 +37,28 @@ public class GatewayController {
     @Value("${services.order.url:http://localhost:8082}")
     private String orderServiceUrl;
 
+    @Value("${services.auth.url:http://localhost:8083}")
+    private String authServiceUrl;
+
+    @Value("${services.payment.url:http://localhost:8084}")
+    private String paymentServiceUrl;
+
     private final HttpClient httpClient;
 
     public GatewayController() {
         this.httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(5))
                 .build();
+    }
+
+    @RequestMapping(value = "/auth/**")
+    public ResponseEntity<byte[]> routeAuth(HttpServletRequest request, @RequestBody(required = false) byte[] body) {
+        return forwardRequest(authServiceUrl, request, body);
+    }
+
+    @RequestMapping(value = "/payments/**")
+    public ResponseEntity<byte[]> routePayments(HttpServletRequest request, @RequestBody(required = false) byte[] body) {
+        return forwardRequest(paymentServiceUrl, request, body);
     }
 
     @RequestMapping(value = "/products/**")

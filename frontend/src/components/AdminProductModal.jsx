@@ -16,21 +16,33 @@ import {
 import SaveIcon from '@mui/icons-material/Save';
 import { api } from '../services/api';
 
-const defaultCategories = ['Electronics', 'Computers', 'Accessories', 'Audio', 'Wearables', 'Office', 'Gaming'];
-
 export default function AdminProductModal({ open, product, onClose, onSaved }) {
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     price: '',
     stockQuantity: '',
-    category: 'Electronics',
+    category: '',
     imageUrl: '',
     rating: 4.5,
   });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Load categories dynamically from database
+  useEffect(() => {
+    if (open) {
+      api.getProductCategories()
+        .then((cats) => {
+          if (Array.isArray(cats)) {
+            setCategories(cats);
+          }
+        })
+        .catch((err) => console.error('Failed to load categories from database:', err));
+    }
+  }, [open]);
 
   useEffect(() => {
     if (product) {
@@ -39,7 +51,7 @@ export default function AdminProductModal({ open, product, onClose, onSaved }) {
         description: product.description || '',
         price: product.price || '',
         stockQuantity: product.stockQuantity || '',
-        category: product.category || 'Electronics',
+        category: product.category || '',
         imageUrl: product.imageUrl || '',
         rating: product.rating || 4.5,
       });
@@ -49,7 +61,7 @@ export default function AdminProductModal({ open, product, onClose, onSaved }) {
         description: '',
         price: '',
         stockQuantity: '',
-        category: 'Electronics',
+        category: '',
         imageUrl: '',
         rating: 4.5,
       });
@@ -121,20 +133,15 @@ export default function AdminProductModal({ open, product, onClose, onSaved }) {
 
             <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
               <TextField
-                select
                 fullWidth
                 size="small"
                 label="Category"
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-              >
-                {defaultCategories.map((cat) => (
-                  <MenuItem key={cat} value={cat}>
-                    {cat}
-                  </MenuItem>
-                ))}
-              </TextField>
+                placeholder="e.g. Electronics, Audio, Wearables"
+                helperText="Enter or select category (saved to MySQL)"
+              />
 
               <TextField
                 required

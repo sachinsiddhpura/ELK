@@ -25,6 +25,12 @@ public class HealthDashboardController {
     @Value("${services.order.url:http://localhost:8082}")
     private String orderServiceUrl;
 
+    @Value("${services.auth.url:http://localhost:8083}")
+    private String authServiceUrl;
+
+    @Value("${services.payment.url:http://localhost:8084}")
+    private String paymentServiceUrl;
+
     private final HttpClient httpClient = HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(2))
             .build();
@@ -38,6 +44,8 @@ public class HealthDashboardController {
         Map<String, Object> services = new HashMap<>();
         services.put("product-service", checkServiceHealth(productServiceUrl + "/actuator/health", 8081));
         services.put("order-service", checkServiceHealth(orderServiceUrl + "/actuator/health", 8082));
+        services.put("auth-service", checkServiceHealth(authServiceUrl + "/actuator/health", 8083));
+        services.put("payment-service", checkServiceHealth(paymentServiceUrl + "/actuator/health", 8084));
 
         statusMap.put("services", services);
         return ResponseEntity.ok(statusMap);

@@ -21,6 +21,8 @@ import HubIcon from '@mui/icons-material/Hub';
 import InsightsIcon from '@mui/icons-material/Insights';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import SecurityIcon from '@mui/icons-material/Security';
+import PaymentsIcon from '@mui/icons-material/Payments';
 import { api } from '../services/api';
 
 export default function SystemHealth() {
@@ -105,6 +107,22 @@ export default function SystemHealth() {
       icon: <DnsIcon sx={{ fontSize: 36, color: '#7c3aed' }} />,
       routes: ['GET /api/orders', 'POST /api/orders', 'GET /api/orders/simulate-bug'],
     },
+    {
+      name: 'Auth Service',
+      port: 8083,
+      description: 'MySQL: ecommerce_user_db. Issues JWT tokens, BCrypt hashing & RBAC authorization.',
+      status: healthData?.services?.['auth-service']?.status || (error ? 'DOWN' : 'UNKNOWN'),
+      icon: <SecurityIcon sx={{ fontSize: 36, color: '#e11d48' }} />,
+      routes: ['POST /api/auth/login', 'POST /api/auth/register', 'GET /api/auth/me'],
+    },
+    {
+      name: 'Payment Service',
+      port: 8084,
+      description: 'MySQL: ecommerce_payment_db. Processes UPI, Card, Net Banking, COD & Wallets with NPCI reference.',
+      status: healthData?.services?.['payment-service']?.status || (error ? 'DOWN' : 'UNKNOWN'),
+      icon: <PaymentsIcon sx={{ fontSize: 36, color: '#0284c7' }} />,
+      routes: ['POST /api/payments/process', 'GET /api/payments/methods', 'GET /api/payments/all'],
+    },
   ];
 
   return (
@@ -136,7 +154,7 @@ export default function SystemHealth() {
       )}
 
       {/* Services Grid */}
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' }, gap: 3, mb: 4 }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, gap: 3, mb: 4 }}>
         {services.map((svc) => {
           const isUp = svc.status === 'UP';
           return (

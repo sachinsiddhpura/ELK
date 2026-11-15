@@ -12,6 +12,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAllByOrderByOrderDateDesc();
 
+    List<Order> findByCustomerEmailIgnoreCaseOrderByOrderDateDesc(String customerEmail);
+
     Optional<Order> findByOrderNumber(String orderNumber);
 }
 

@@ -27,14 +27,21 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ProductClient productClient;
+    private final com.ecommerce.order.client.PaymentClient paymentClient;
 
-    public OrderService(OrderRepository orderRepository, ProductClient productClient) {
+    public OrderService(OrderRepository orderRepository, ProductClient productClient,
+                        com.ecommerce.order.client.PaymentClient paymentClient) {
         this.orderRepository = orderRepository;
         this.productClient = productClient;
+        this.paymentClient = paymentClient;
     }
 
     public List<Order> getAllOrders() {
         return orderRepository.findAllByOrderByOrderDateDesc();
+    }
+
+    public List<Order> getOrdersByCustomerEmail(String customerEmail) {
+        return orderRepository.findByCustomerEmailIgnoreCaseOrderByOrderDateDesc(customerEmail);
     }
 
     public Optional<Order> getOrderById(Long id) {
@@ -116,15 +123,32 @@ public class OrderService {
                 totalAmount += item.getSubtotal();
             }
 
-            // 3. Payment verification
-            if ("FailPayment".equalsIgnoreCase(request.getPaymentMethod())) {
-                MDC.put("errorCode", "ERR_PAYMENT_FAILED");
-                log.error("[PAYMENT ERROR] Payment gateway rejected transaction: 504 Gateway Timeout while contacting Razorpay/UPI gateway");
-                throw new RuntimeException("Payment Gateway Error: 504 Gateway Timeout. Flow stopped.");
-            }
-
+            // 3. Payment verification & Execution via payment-service (Port 8084)
             order.setTotalAmount(Math.round(totalAmount * 100.0) / 100.0);
             MDC.put("orderTotal", String.valueOf(order.getTotalAmount()));
+
+            String simPaymentFail = "FailPayment".equalsIgnoreCase(request.getPaymentMethod()) ? "timeout" :
+                    ("payment_timeout".equalsIgnoreCase(request.getSimulateError()) ? "timeout" : "none");
+
+            java.util.Map<String, Object> paymentResp = paymentClient.processPayment(
+                    orderNumber,
+                    request.getCustomerEmail(),
+                    order.getTotalAmount(),
+                    request.getPaymentMethod(),
+                    request.getPaymentDetails(),
+                    simPaymentFail
+            );
+
+            if (paymentResp == null || "FAILED".equalsIgnoreCase(String.valueOf(paymentResp.get("status")))) {
+                String failureReason = paymentResp != null ? (String) paymentResp.get("failureReason") : "Payment gateway error";
+                MDC.put("errorCode", "ERR_PAYMENT_FAILED");
+                log.error("[PAYMENT REJECTED] Payment declined by payment-service: {}", failureReason);
+                throw new RuntimeException("Payment Failed: " + failureReason + ". Flow stopped.");
+            }
+
+            order.setTransactionId((String) paymentResp.get("transactionId"));
+            order.setPaymentStatus(String.valueOf(paymentResp.get("status")));
+            MDC.put("transactionId", order.getTransactionId());
 
             Order savedOrder = orderRepository.save(order);
             log.info("Successfully created order {} with total amount ₹{}", savedOrder.getOrderNumber(), savedOrder.getTotalAmount());

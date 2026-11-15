@@ -30,6 +30,10 @@ public class Order {
 
     private String paymentMethod;
 
+    private String transactionId;
+
+    private String paymentStatus;
+
     @Column(nullable = false)
     private Double totalAmount;
 
@@ -106,6 +110,22 @@ public class Order {
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     public Double getTotalAmount() {
