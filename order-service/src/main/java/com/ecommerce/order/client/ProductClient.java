@@ -43,5 +43,17 @@ public class ProductClient {
                 })
                 .toBodilessEntity();
     }
+
+    public void restoreStock(Long productId, int quantity) {
+        log.info("Compensating transaction: Restoring {} units to product ID: {}", quantity, productId);
+        try {
+            restClient.put()
+                    .uri("/{id}/restore-stock?quantity={qty}", productId, quantity)
+                    .retrieve()
+                    .toBodilessEntity();
+        } catch (Exception e) {
+            log.error("Failed to execute compensating stock restoration for product ID {}: {}", productId, e.getMessage());
+        }
+    }
 }
 

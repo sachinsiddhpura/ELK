@@ -22,6 +22,8 @@ public class OrderRequest {
 
     private String paymentMethod = "Credit Card";
 
+    private String simulateError; // e.g. "none", "payment_timeout", "insufficient_stock", "downstream_failure", "null_pointer"
+
     @NotEmpty(message = "Order must contain at least one item")
     @Valid
     private List<OrderItemRequest> items;
@@ -66,6 +68,14 @@ public class OrderRequest {
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public String getSimulateError() {
+        return simulateError;
+    }
+
+    public void setSimulateError(String simulateError) {
+        this.simulateError = simulateError;
     }
 
     public List<OrderItemRequest> getItems() {

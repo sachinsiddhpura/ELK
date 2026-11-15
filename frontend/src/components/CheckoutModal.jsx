@@ -19,9 +19,15 @@ import {
   List,
   ListItem,
   ListItemText,
+  Select,
+  MenuItem,
+  InputLabel,
+  Chip,
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import BugReportIcon from '@mui/icons-material/BugReport';
+import ErrorOutlinedIcon from '@mui/icons-material/ErrorOutlined';
 import { useCart } from '../context/CartContext';
 import { api } from '../services/api';
 import { formatINR } from '../utils/formatCurrency';
@@ -40,6 +46,7 @@ export default function CheckoutModal({ open, onClose, onOrderPlaced }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [completedOrder, setCompletedOrder] = useState(null);
+  const [simulateError, setSimulateError] = useState('none');
 
   const shipping = cartTotal > 999 ? 0 : 99;
   const tax = cartTotal * 0.18;
@@ -52,7 +59,10 @@ export default function CheckoutModal({ open, onClose, onOrderPlaced }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.customerName || !formData.customerEmail || !formData.shippingAddress) {
-      setError('Please fill in all required fields (Name, Email, Address)');
+      setError({
+        title: 'Validation Error',
+        detail: 'Please fill in all required customer details (Name, Email, Address)',
+      });
       return;
     }
 
@@ -65,6 +75,7 @@ export default function CheckoutModal({ open, onClose, onOrderPlaced }) {
       customerPhone: formData.customerPhone,
       shippingAddress: formData.shippingAddress,
       paymentMethod: formData.paymentMethod,
+      simulateError: simulateError,
       items: cartItems.map((item) => ({
         productId: item.product.id,
         quantity: item.quantity,
@@ -77,12 +88,19 @@ export default function CheckoutModal({ open, onClose, onOrderPlaced }) {
       clearCart();
       if (onOrderPlaced) onOrderPlaced(placedOrder);
     } catch (err) {
-      console.error('Order submission failed:', err);
+      console.error('Order submission blocked due to error:', err);
       const errMsg =
         err.response?.data?.error ||
         err.response?.data?.message ||
-        'Failed to place order in MySQL. Downstream service may be unavailable or stock is insufficient.';
-      setError(errMsg);
+        'Order placement failed. Downstream service reported an error.';
+
+      // DO NOT GO FORWARD: completedOrder is NOT set, clearCart() is NOT called.
+      setError({
+        title: 'Order Flow Blocked — Order NOT Placed',
+        detail: errMsg,
+        status: err.response?.status || 500,
+        logNote: 'Structured JSON error log has been written to order-service/logs/order-service-json.log',
+      });
     } finally {
       setLoading(false);
     }
@@ -139,8 +157,28 @@ export default function CheckoutModal({ open, onClose, onOrderPlaced }) {
           <Divider />
           <DialogContent sx={{ p: 3 }}>
             {error && (
-              <Alert severity="error" sx={{ mb: 3 }}>
-                {error}
+              <Alert
+                severity="error"
+                icon={<ErrorOutlinedIcon fontSize="inherit" />}
+                sx={{
+                  mb: 3,
+                  borderRadius: 2,
+                  border: '1px solid #fecaca',
+                  bgcolor: '#fff5f5',
+                  color: '#991b1b',
+                }}
+              >
+                <Typography variant="subtitle2" fontWeight={800}>
+                  {error.title || 'Error'}
+                </Typography>
+                <Typography variant="body2" sx={{ my: 0.5 }}>
+                  {error.detail || error}
+                </Typography>
+                {error.logNote && (
+                  <Typography variant="caption" sx={{ display: 'block', color: '#b91c1c', mt: 0.5, fontStyle: 'italic' }}>
+                    📄 {error.logNote}
+                  </Typography>
+                )}
               </Alert>
             )}
 
@@ -197,7 +235,7 @@ export default function CheckoutModal({ open, onClose, onOrderPlaced }) {
               2. Payment Method
             </Typography>
 
-            <FormControl component="fieldset" sx={{ mb: 3 }}>
+            <FormControl component="fieldset" sx={{ mb: 2.5 }}>
               <RadioGroup row name="paymentMethod" value={formData.paymentMethod} onChange={handleChange}>
                 <FormControlLabel value="UPI / GPay / PhonePe" control={<Radio size="small" />} label="UPI / GPay / Paytm" />
                 <FormControlLabel value="Credit / Debit Card" control={<Radio size="small" />} label="Credit / Debit Card" />
@@ -205,6 +243,42 @@ export default function CheckoutModal({ open, onClose, onOrderPlaced }) {
                 <FormControlLabel value="Cash on Delivery" control={<Radio size="small" />} label="Cash on Delivery" />
               </RadioGroup>
             </FormControl>
+
+            {/* Error Simulation Diagnostics Box */}
+            <Box sx={{ mb: 3, p: 2, bgcolor: '#fef2f2', border: '1px solid #fecaca', borderRadius: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                <BugReportIcon sx={{ color: '#dc2626', fontSize: 20 }} />
+                <Typography variant="subtitle2" fontWeight={800} sx={{ color: '#991b1b' }}>
+                  Simulate Error in Flow (Test Logback & Failure Abort)
+                </Typography>
+              </Box>
+              <Typography variant="caption" sx={{ color: '#7f1d1d', display: 'block', mb: 1.5 }}>
+                When an error is simulated, the flow STOPS immediately: no order is created in MySQL, the cart is preserved, and structured error logs are output to <code>order-service-json.log</code>.
+              </Typography>
+              <FormControl size="small" fullWidth sx={{ bgcolor: '#ffffff' }}>
+                <Select
+                  value={simulateError}
+                  onChange={(e) => setSimulateError(e.target.value)}
+                  sx={{ borderRadius: 1.5 }}
+                >
+                  <MenuItem value="none">
+                    <strong>✅ Normal Checkout (Flow succeeds, order is created)</strong>
+                  </MenuItem>
+                  <MenuItem value="payment_timeout">
+                    🔴 Simulate Payment Gateway 504 Timeout (Flow aborts)
+                  </MenuItem>
+                  <MenuItem value="insufficient_stock">
+                    🔴 Simulate Insufficient Stock 400 Error (Flow aborts)
+                  </MenuItem>
+                  <MenuItem value="downstream_failure">
+                    🔴 Simulate Downstream Product-Service 503 Outage (Flow aborts)
+                  </MenuItem>
+                  <MenuItem value="null_pointer">
+                    🔴 Simulate Internal Server NullPointerException 500 (Flow aborts)
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
 
             <Typography variant="subtitle2" fontWeight={700} color="primary" sx={{ mb: 1 }}>
               3. Order Summary

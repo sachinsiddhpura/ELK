@@ -63,25 +63,16 @@ public class OrderController {
     public ResponseEntity<?> placeOrder(@Valid @RequestBody OrderRequest request) {
         log.info("Inbound order placement request received for customer: {}", request.getCustomerName());
 
-        // INTENTIONAL BUG 2: Trigger Payment Gateway Failure when paymentMethod is 'FailPayment' or customerName contains 'crash'
-        if ("FailPayment".equalsIgnoreCase(request.getPaymentMethod()) ||
-            (request.getCustomerName() != null && request.getCustomerName().toLowerCase().contains("crash"))) {
-            log.warn("[PAYMENT WARNING] Pre-authorization check warning for customer: {}", request.getCustomerName());
-            log.error("[PAYMENT ERROR] Payment gateway rejected transaction: 504 Gateway Timeout while contacting Razorpay/UPI gateway",
-                    new IOException("Connection reset by peer: payment-gateway.razorpay.com:443"));
-            Map<String, String> error = new HashMap<>();
-            error.put("error", "Payment Gateway Error: 504 Gateway Timeout (Simulated Error for Logging)");
-            return ResponseEntity.status(HttpStatus.PAYMENT_REQUIRED).body(error);
-        }
-
         try {
             Order order = orderService.placeOrder(request);
             log.info("Order placed successfully with orderNumber: {} total: ₹{}", order.getOrderNumber(), order.getTotalAmount());
             return new ResponseEntity<>(order, HttpStatus.CREATED);
         } catch (RuntimeException e) {
-            log.error("[ORDER PLACEMENT FAILED] Error placing order for customer {}: {}", request.getCustomerName(), e.getMessage(), e);
-            Map<String, String> error = new HashMap<>();
+            log.error("[ORDER PLACEMENT BLOCKED] Flow stopped due to error for customer {}: {}", request.getCustomerName(), e.getMessage());
+            Map<String, Object> error = new HashMap<>();
+            error.put("success", false);
             error.put("error", e.getMessage());
+            error.put("status", "ORDER_ABORTED");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
         }
     }

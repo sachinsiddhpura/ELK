@@ -59,3 +59,22 @@
 2026-11-15 10:46:56.246 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2026-11-15 10:46:56.248 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2026-11-15 10:46:56.250 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-15 10:47:58.053 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-4] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products
+2026-11-15 10:47:58.437 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-5] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] POST /api/orders -> http://localhost:8082/api/orders
+2026-11-15 10:48:08.673 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-8] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products
+2026-11-15 10:48:08.678 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-9] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/categories -> http://localhost:8081/api/products/categories
+2026-11-15 10:48:08.812 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-10] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products
+2026-11-15 10:48:08.901 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-2] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/categories -> http://localhost:8081/api/products/categories
+2026-11-15 10:48:12.554 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-4] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] POST /api/orders/simulate-bug -> http://localhost:8082/api/orders/simulate-bug?type=payment
+2026-11-15 10:48:12.750 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-5] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] POST /api/products/simulate-bug -> http://localhost:8081/api/products/simulate-bug?type=database
+2026-11-15 10:48:18.128 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-7] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/orders/simulate-bug -> http://localhost:8082/api/orders/simulate-bug?type=payment
+2026-11-15 10:48:23.117 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-8] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/orders/simulate-bug -> http://localhost:8082/api/orders/simulate-bug?type=payment
+2026-11-15 10:48:23.232 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-10] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/simulate-bug -> http://localhost:8081/api/products/simulate-bug?type=database
+2026-11-15 10:49:37.784 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-6] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products
+2026-11-15 10:49:37.784 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-7] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/categories -> http://localhost:8081/api/products/categories
+2026-11-15 10:49:37.813 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-8] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/categories -> http://localhost:8081/api/products/categories
+2026-11-15 10:49:37.820 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-10] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products
+2026-11-15 10:49:58.046 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-2] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] POST /api/orders -> http://localhost:8082/api/orders
+2026-11-15 10:49:58.174 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-1] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products
+2026-11-15 10:50:02.454 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-3] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/orders -> http://localhost:8082/api/orders
+2026-11-15 10:50:05.076 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-4] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/orders -> http://localhost:8082/api/orders
