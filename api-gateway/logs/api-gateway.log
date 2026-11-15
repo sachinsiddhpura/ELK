@@ -1,0 +1,61 @@
+2026-11-15 10:20:49.640 [ INFO] [api-gateway] [Port:8080] [main] c.e.gateway.ApiGatewayApplication        : Starting ApiGatewayApplication using Java 21.0.11 with PID 25740 (C:\Users\sachi\My Activities\Projects\ELK\api-gateway\target\classes started by sachi in C:\Users\sachi\My Activities\Projects\ELK\api-gateway)
+2026-11-15 10:20:49.656 [ INFO] [api-gateway] [Port:8080] [main] c.e.gateway.ApiGatewayApplication        : No active profile set, falling back to 1 default profile: "default"
+2026-11-15 10:20:51.730 [ INFO] [api-gateway] [Port:8080] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-11-15 10:20:51.766 [ INFO] [api-gateway] [Port:8080] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-15 10:20:51.767 [ INFO] [api-gateway] [Port:8080] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-15 10:20:51.875 [ INFO] [api-gateway] [Port:8080] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2139 ms
+2026-11-15 10:20:55.340 [ INFO] [api-gateway] [Port:8080] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoints beneath base path '/actuator'
+2026-11-15 10:20:55.646 [ INFO] [api-gateway] [Port:8080] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-11-15 10:20:55.682 [ INFO] [api-gateway] [Port:8080] [main] c.e.gateway.ApiGatewayApplication        : Started ApiGatewayApplication in 7.153 seconds (process running for 7.896)
+2026-11-15 10:21:02.916 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-15 10:21:02.918 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-15 10:21:02.926 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2026-11-15 10:21:07.066 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-3] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products
+2026-11-15 10:21:07.066 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-4] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/categories -> http://localhost:8081/api/products/categories
+2026-11-15 10:21:07.076 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-4] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8081/api/products/categories: null
+2026-11-15 10:21:07.076 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-3] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8081/api/products: null
+2026-11-15 10:21:07.103 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-6] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/categories -> http://localhost:8081/api/products/categories
+2026-11-15 10:21:07.104 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-5] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products
+2026-11-15 10:21:07.108 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-6] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8081/api/products/categories: null
+2026-11-15 10:21:07.109 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-5] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8081/api/products: null
+2026-11-15 10:22:02.592 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-5] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products
+2026-11-15 10:22:02.594 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-6] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/categories -> http://localhost:8081/api/products/categories
+2026-11-15 10:22:02.791 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-7] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/categories -> http://localhost:8081/api/products/categories
+2026-11-15 10:22:02.896 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-9] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products
+2026-11-15 10:22:07.260 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-8] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products?category=Wearables
+2026-11-15 10:22:10.224 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-10] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products?category=Electronics
+2026-11-15 10:22:13.968 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-1] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products
+2026-11-15 10:35:06.757 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-6] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products
+2026-11-15 10:35:06.765 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-7] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/categories -> http://localhost:8081/api/products/categories
+2026-11-15 10:35:06.785 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-5] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products
+2026-11-15 10:35:06.815 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-9] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/categories -> http://localhost:8081/api/products/categories
+2026-11-15 10:35:24.267 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-8] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products
+2026-11-15 10:35:24.267 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-10] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/categories -> http://localhost:8081/api/products/categories
+2026-11-15 10:35:24.304 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-3] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products -> http://localhost:8081/api/products
+2026-11-15 10:35:24.306 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-10] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/categories -> http://localhost:8081/api/products/categories
+2026-11-15 10:36:01.526 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-2] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/orders -> http://localhost:8082/api/orders
+2026-11-15 10:36:01.532 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-2] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8082/api/orders: null
+2026-11-15 10:36:01.536 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-4] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/orders -> http://localhost:8082/api/orders
+2026-11-15 10:36:01.543 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-4] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8082/api/orders: null
+2026-11-15 10:36:22.749 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-7] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/simulate-bug -> http://localhost:8081/api/products/simulate-bug?type=npe
+2026-11-15 10:36:23.144 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-6] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/simulate-bug -> http://localhost:8081/api/products/simulate-bug?type=deadlock
+2026-11-15 10:36:23.160 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-5] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/orders/simulate-bug -> http://localhost:8082/api/orders/simulate-bug?type=payment
+2026-11-15 10:36:23.163 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-5] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8082/api/orders/simulate-bug?type=payment: null
+2026-11-15 10:36:23.166 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-9] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/orders/simulate-bug -> http://localhost:8082/api/orders/simulate-bug?type=inter-service
+2026-11-15 10:36:23.168 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-9] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8082/api/orders/simulate-bug?type=inter-service: null
+2026-11-15 10:37:04.040 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-2] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/orders/simulate-bug -> http://localhost:8082/api/orders/simulate-bug?type=payment
+2026-11-15 10:37:04.781 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-4] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/orders/simulate-bug -> http://localhost:8082/api/orders/simulate-bug?type=inter-service
+2026-11-15 10:37:04.852 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-7] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/orders/simulate-bug -> http://localhost:8082/api/orders/simulate-bug?type=npe
+2026-11-15 10:38:01.665 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-9] c.e.g.controller.GatewayController       : [GATEWAY ROUTE] GET /api/products/simulate-bug -> http://localhost:8081/api/products/simulate-bug?type=npe
+2026-11-15 10:46:50.534 [ INFO] [api-gateway] [Port:8080] [main] c.e.gateway.ApiGatewayApplication        : Starting ApiGatewayApplication using Java 21.0.11 with PID 10824 (C:\Users\sachi\My Activities\Projects\ELK\api-gateway\target\classes started by sachi in C:\Users\sachi\My Activities\Projects\ELK\api-gateway)
+2026-11-15 10:46:50.557 [ INFO] [api-gateway] [Port:8080] [main] c.e.gateway.ApiGatewayApplication        : No active profile set, falling back to 1 default profile: "default"
+2026-11-15 10:46:52.998 [ INFO] [api-gateway] [Port:8080] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-11-15 10:46:53.019 [ INFO] [api-gateway] [Port:8080] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-15 10:46:53.020 [ INFO] [api-gateway] [Port:8080] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-15 10:46:53.084 [ INFO] [api-gateway] [Port:8080] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2448 ms
+2026-11-15 10:46:54.498 [ INFO] [api-gateway] [Port:8080] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoints beneath base path '/actuator'
+2026-11-15 10:46:54.564 [ INFO] [api-gateway] [Port:8080] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-11-15 10:46:54.571 [ INFO] [api-gateway] [Port:8080] [main] c.e.gateway.ApiGatewayApplication        : Started ApiGatewayApplication in 5.932 seconds (process running for 6.465)
+2026-11-15 10:46:56.246 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-15 10:46:56.248 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-15 10:46:56.250 [ INFO] [api-gateway] [Port:8080] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms

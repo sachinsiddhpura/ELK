@@ -1,0 +1,8 @@
+2026-11-15 10:21:07.076 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-4] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8081/api/products/categories: null
+2026-11-15 10:21:07.076 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-3] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8081/api/products: null
+2026-11-15 10:21:07.108 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-6] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8081/api/products/categories: null
+2026-11-15 10:21:07.109 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-5] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8081/api/products: null
+2026-11-15 10:36:01.532 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-2] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8082/api/orders: null
+2026-11-15 10:36:01.543 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-4] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8082/api/orders: null
+2026-11-15 10:36:23.163 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-5] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8082/api/orders/simulate-bug?type=payment: null
+2026-11-15 10:36:23.168 [ERROR] [api-gateway] [Port:8080] [http-nio-8080-exec-9] c.e.g.controller.GatewayController       : [GATEWAY ERROR] Failed to forward request to http://localhost:8082/api/orders/simulate-bug?type=inter-service: null
